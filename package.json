@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build":"npm run build-back && npm run build-front",
+    "build": "npm run build-back && npm run build-front",
     "start": "cd serverbuild && node bundle-back.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-all": "npm run build-front && npm run build-back",
@@ -19,12 +19,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mysql": "^2.15.17",
     "express": "4.17.1",
     "http": "0.0.1-security",
+    "mysql": "^2.18.1",
     "path": "0.12.7",
     "phaser": "3.52.0",
     "socket.io": "3.1.0",
-    "socket.io-client": "3.1.0"    
+    "socket.io-client": "3.1.0"
   },
   "devDependencies": {
     "@types/express": "4.17.11",

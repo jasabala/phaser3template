@@ -9,6 +9,18 @@ module.exports = {
     path: path.resolve(__dirname, "serverbuild"),
     filename: "bundle-back.js"
   },
+  module: {
+    rules: [
+      {
+        test: /\.ts?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ],
+  },
   externals: [nodeExternals()],
   mode: "development"
 };

@@ -1,13 +1,12 @@
-import Phaser from 'phaser'
-import io from 'socket.io-client'
+import 'phaser'
+import MainScene from './scenes/mainScene'
 
-import GameScene from './gameScene'
 
 const DEFAULT_WIDTH = 1024
-const DEFAULT_HEIGHT =600
+const DEFAULT_HEIGHT = 800
 
 const config: Phaser.Types.Core.GameConfig = {
-  backgroundColor: '#2222ff',
+  backgroundColor: '#ffffff',
   scale: {
     parent: 'phaser-game',
     mode: Phaser.Scale.FIT,
@@ -16,17 +15,19 @@ const config: Phaser.Types.Core.GameConfig = {
     height: DEFAULT_HEIGHT
   },
   scene: [
-    GameScene
+     MainScene, 
   ],
   physics: {
     default: 'matter',
-    matter: {
+    arcade: {
       debug: true,
-      gravity: { y: .75 }
+      gravity: { y: 100}
     }
-  },
+  }
 }
 
 window.addEventListener('load', () => {
   let game = new Phaser.Game(config)
 })
+
+//
