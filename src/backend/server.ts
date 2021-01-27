@@ -18,17 +18,17 @@ const io = require('socket.io')(server);
 //   });
 
 
-app.use(express.static('/../build')); 
+app.use(express.static('/../build-client')); 
 
 app.get("/", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build/index.html"))
+    res.sendFile(path.join(__dirname,"/../build-client/index.html"))
 })
 app.get("/bundle-front.js", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build/bundle-front.js"))
+    res.sendFile(path.join(__dirname,"/../build-client/bundle-front.js"))
 })
 
 app.get("/assets/*", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build/"+req.path))
+    res.sendFile(path.join(__dirname,"/../build-client/"+req.path))
 })
 
 io.on('connection', function (socket) {

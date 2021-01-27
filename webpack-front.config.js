@@ -5,7 +5,7 @@ module.exports = {
     app: ["./src/frontend/front.ts"]
   },
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "build-client"),
     filename: "bundle-front.js",
   },
   devServer: {
