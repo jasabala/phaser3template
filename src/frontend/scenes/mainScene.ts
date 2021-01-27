@@ -13,6 +13,7 @@ export default class SceneLogin extends Phaser.Scene {
   init(data: any) { }
   preload() {
       this.load.image("player", "assets/player.png")
+      this.load.image("circle", "assets/circle.png")
    }
 
   create() {
@@ -24,14 +25,27 @@ export default class SceneLogin extends Phaser.Scene {
           console.log("connected: ", msg)
       })
 
-        for(let i = 0; i< 200; i++){
-          let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-200*i, "player")
-          p.angle=Math.random()*360
-          p.setBounce(.7)
-          p.setScale(.25)
-          let color = new Phaser.Display.Color();
-          color.random(180);
-          p.setTint(color.color);
+        for(let i = 0; i< 100; i++){
+
+          let circle = Math.random() < .5
+          if(circle){
+            let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-400*i, "player")
+            p.angle=Math.random()*360
+            p.setBounce(.7)
+            p.setScale(.25+Math.random()*.35)
+            let color = new Phaser.Display.Color();
+            color.random(180);
+            p.setTint(color.color);
+          }else{
+            let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-400*i, "circle")
+            p.angle=Math.random()*360
+            p.setBounce(.7)
+            p.setScale(.25+Math.random()*.25)
+            p.setCircle(p.width*p.scale/2)
+            let color = new Phaser.Display.Color();
+            color.random(180);
+            p.setTint(color.color);
+          }
         }
         
         this.block = this.matter.add.sprite(512,400,"player")
