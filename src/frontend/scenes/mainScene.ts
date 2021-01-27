@@ -36,6 +36,7 @@ export default class SceneLogin extends Phaser.Scene {
             let color = new Phaser.Display.Color();
             color.random(180);
             p.setTint(color.color);
+            p.setFriction(.9)
           }else{
             let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-400*i, "circle")
             p.angle=Math.random()*360
@@ -45,12 +46,13 @@ export default class SceneLogin extends Phaser.Scene {
             let color = new Phaser.Display.Color();
             color.random(180);
             p.setTint(color.color);
+            p.setFriction(.9)
           }
         }
         
         this.block = this.matter.add.sprite(512,400,"player")
         this.block.setStatic(true)
-        this.block.setScale(4.5)
+        this.block.setScale(4.5).setFriction(.9)
    
   }
 
