@@ -23,6 +23,9 @@ app.use(express.static('/../build-client'));
 app.get("/", (req, res) =>{
     res.sendFile(path.join(__dirname,"/../build-client/index.html"))
 })
+app.get("/mystyle.css", (req, res) =>{
+    res.sendFile(path.join(__dirname,"/../build-client/mystyle.css"))
+})
 app.get("/bundle-front.js", (req, res) =>{
     res.sendFile(path.join(__dirname,"/../build-client/bundle-front.js"))
 })
