@@ -6,6 +6,9 @@ I intend to use this project for multiplayer games and for games that track data
 
 
 
+
+## it's running at http://phaser3template.herokuapp.com
+If no one is on, it takes a few seconds for the free server to spin up.
 ##  -----------to compile and run---------------------
 npm run build-front<br />
 npm run build-back<br />
