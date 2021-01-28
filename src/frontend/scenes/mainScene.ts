@@ -3,14 +3,14 @@ import io from 'socket.io-client'
 import Square from '../objects/square'
 import Ball from '../objects/ball'
 
-export default class SceneLogin extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
  
     socket: any
     block: any
     block2: any
 
     constructor() {
-    super('LoginScene')
+    super('MainScene')
   }
 
   init(data: any) { }
