@@ -7,6 +7,7 @@ export default class SceneLogin extends Phaser.Scene {
  
     socket: any
     block: any
+    block2: any
 
     constructor() {
     super('LoginScene')
@@ -39,11 +40,15 @@ export default class SceneLogin extends Phaser.Scene {
         
         this.block = this.matter.add.sprite(512,420,"square")
         this.block.setStatic(true)
-        this.block.setScale(5, 2).setFriction(.9)
+        this.block.setScale(5.5, 1.5).setFriction(.9)
+        this.block2 = this.matter.add.sprite(512,420,"square")
+        this.block2.setStatic(true)
+        this.block2.setScale(5.5, 1.5).setFriction(.9).angle+=90
    
   }
 
   update(){
-    this.block.angle+=2.5
+    this.block.angle+=1.5
+    this.block2.angle+=1.5
   }
 }
