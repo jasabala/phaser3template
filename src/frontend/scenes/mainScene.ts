@@ -1,5 +1,7 @@
 
 import io from 'socket.io-client'
+import Square from '../objects/square'
+import Ball from '../objects/ball'
 
 export default class SceneLogin extends Phaser.Scene {
  
@@ -12,7 +14,7 @@ export default class SceneLogin extends Phaser.Scene {
 
   init(data: any) { }
   preload() {
-      this.load.image("player", "assets/player.png")
+      this.load.image("square", "assets/square.png")
       this.load.image("circle", "assets/circle.png")
    }
 
@@ -29,28 +31,13 @@ export default class SceneLogin extends Phaser.Scene {
 
           let circle = Math.random() < .5
           if(circle){
-            let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-400*i, "player")
-            p.angle=Math.random()*360
-            p.setBounce(.7)
-            p.setScale(.25+Math.random()*.35)
-            let color = new Phaser.Display.Color();
-            color.random(180);
-            p.setTint(color.color);
-            p.setFriction(.9)
+          new Ball(this,i)
           }else{
-            let p: Phaser.Physics.Matter.Sprite = this.matter.add.sprite(500,-400*i, "circle")
-            p.angle=Math.random()*360
-            p.setBounce(.7)
-            p.setScale(.25+Math.random()*.25)
-            p.setCircle(p.width*p.scale/2)
-            let color = new Phaser.Display.Color();
-            color.random(180);
-            p.setTint(color.color);
-            p.setFriction(.9)
+            new Square(this,i)
           }
         }
         
-        this.block = this.matter.add.sprite(512,400,"player")
+        this.block = this.matter.add.sprite(512,400,"square")
         this.block.setStatic(true)
         this.block.setScale(4.5).setFriction(.9)
    
