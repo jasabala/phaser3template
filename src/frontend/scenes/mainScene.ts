@@ -28,7 +28,7 @@ export default class MainScene extends Phaser.Scene {
           console.log("connected: ", msg)
       })
 
-        for(let i = 0; i< 100; i++){
+        for(let i = 0; i< 800; i++){
 
           let circle = Math.random() < .5
           if(circle){
@@ -40,10 +40,10 @@ export default class MainScene extends Phaser.Scene {
         
         this.block = this.matter.add.sprite(512,420,"square")
         this.block.setStatic(true)
-        this.block.setScale(5.5, 1.5).setFriction(.9)
+        this.block.setScale(5.4, 1.5).setFriction(.9)
         this.block2 = this.matter.add.sprite(512,420,"square")
         this.block2.setStatic(true)
-        this.block2.setScale(5.5, 1.5).setFriction(.9).angle+=90
+        this.block2.setScale(5.4, 1.5).setFriction(.9).angle+=90
    
   }
 
