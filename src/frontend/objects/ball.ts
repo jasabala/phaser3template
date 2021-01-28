@@ -6,7 +6,7 @@ export default class Ball extends Phaser.Physics.Matter.Sprite {
     console.log("ball")
       this.angle = Math.random() * 360
       this.setBounce(.7)
-      this.setScale(.05 + Math.random() * .2)
+      this.setScale(.1 + Math.random() * .4)
       this.setCircle(this.width*this.scale/2)
       let color = new Phaser.Display.Color()
       color.random(180)

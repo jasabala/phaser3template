@@ -28,7 +28,7 @@ export default class MainScene extends Phaser.Scene {
           console.log("connected: ", msg)
       })
 
-        for(let i = 0; i< 800; i++){
+        for(let i = 0; i< 200; i++){
 
           let circle = Math.random() < .5
           if(circle){
