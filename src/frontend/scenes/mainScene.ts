@@ -37,9 +37,9 @@ export default class SceneLogin extends Phaser.Scene {
           }
         }
         
-        this.block = this.matter.add.sprite(512,400,"square")
+        this.block = this.matter.add.sprite(512,420,"square")
         this.block.setStatic(true)
-        this.block.setScale(4.5).setFriction(.9)
+        this.block.setScale(5, 2).setFriction(.9)
    
   }
 
