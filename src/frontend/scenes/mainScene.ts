@@ -82,6 +82,7 @@ export default class MainScene extends Phaser.Scene {
     let oldY = 0
     let oldAngle = 0
 
+    //send a position update only if position is changed
     return ()=>{
       if(this.player && (Math.abs(this.player.x - oldX) > 1 || Math.abs(this.player.y - oldY) > 1 || Math.abs(this.player.angle - oldAngle) > 1  )){
         let data = {
@@ -95,11 +96,8 @@ export default class MainScene extends Phaser.Scene {
         oldX = this.player.x
         oldY = this.player.y
         oldAngle = this.player.angle
-      }
-      
-
-    }
-    
+      }      
+    }    
   }
 
 }

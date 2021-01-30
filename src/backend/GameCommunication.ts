@@ -5,8 +5,8 @@ interface UserData {
   loginTime: string,
   x: number,
   y:number,
-  vx?: number,
-  vy?:number
+  vx: number,
+  vy:number
   angle: number,
   color: string
 }
