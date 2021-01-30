@@ -31,9 +31,7 @@ app.get("/assets/*", (req, res) =>{
     res.sendFile(path.join(__dirname,"/../build-client/"+req.path))
 })
 
-io.on('connection', function (socket) {
-    socketCommunication(socket);
-  })
+socketCommunication(io);
   
   server.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
