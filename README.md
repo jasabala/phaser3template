@@ -8,7 +8,7 @@ I intend to use this project for multiplayer games and for games that track data
 
 
 ## it's running at http://phaser3template.herokuapp.com
-If no one is on, it takes a few seconds for the free server to spin up.
+If no one is on, it takes a few seconds for the free server to spin up. The demo shows a new square per user and sync the location of all users. No player controls yet. 
 ##  -----------to compile and run---------------------
 npm run build-front<br />
 npm run build-back<br />
