@@ -1,14 +1,15 @@
 export default class Square extends Phaser.Physics.Matter.Sprite {
-
-    constructor(scene: Phaser.Scene) {
-      super(scene.matter.world, -500,-500,"square")
+  socketId: string
+  
+  constructor(scene: Phaser.Scene, data) {
+      
+      super(scene.matter.world,data.x,data.y,"square")
       scene.add.existing(this)
-        this.angle = Math.random() * 360
+        this.socketId = data.socketId
+        this.angle = data.angle
         this.setBounce(.7)
-        this.setScale(.1 + Math.random() * .5)
-        let color = new Phaser.Display.Color()
-        color.random(180)
-        this.setTint(color.color)
+        this.setScale(.5)
+        this.setTint(data.color)
         this.setFriction(.9)
       }
 

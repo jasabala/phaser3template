@@ -1,34 +1,55 @@
 import Phaser from 'phaser'
 interface UserData {
-  socketID: string,
+  socketId: string,
   loginTime: string,
   x: number,
-  y:number
+  y:number,
+  angle: number
+  color: string
 }
 export function socketCommunication(io: any) {
 
   
   let currentUsers: UserData[] = [] //array to store socketids and player data of each connection
-
-
+  
   io.on('connection', function (socket) {
-    let newPlayer = createNewUser(socket)
-    currentUsers.push(newPlayer)  //add user for data tracking/sharing
-
     //remove the users data when they disconnect.
     socket.on('disconnect', function () {
-      let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketID == socket.id})
-      console.log(currentUsers.length)
+      let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketId == socket.id})
+   //   console.log(currentUsers.length)
       if(u && u[0]){
-        console.log("removing user :",u)
+   //     console.log("removing user :",u)        
+        socket.broadcast.emit("remove player", u[0].socketId)
         currentUsers.splice(currentUsers.indexOf(u[0]), 1);
       }
       socket.removeAllListeners();
     });
 
+    socket.on('player update', function (data) {
+      let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketId == socket.id})
+      if(u && u[0]){
+        let player = u[0]
+        player.x = data.x
+        player.y = data.y
+        player.angle = data.angle
+      }
+   //   console.log(currentUsers)
+    });
+
     //welcome the new user and send user info
-    socket.emit("first hi",newPlayer);
+    let newPlayer = createNewUser(socket)
+    socket.emit("first hi",newPlayer, currentUsers);
+    socket.broadcast.emit("add opponent", newPlayer);
+    currentUsers.push(newPlayer)  //add user for data tracking/sharing
+
   })
+
+  setInterval(()=>{
+    io.emit("update all", currentUsers)
+  }, 100/30)
+
+  function sendPlayerData(){
+  }
 
 }
 
@@ -40,10 +61,12 @@ function createNewUser(socket){
   });
 
   let user: UserData = {
-    socketID : socket.id,
+    socketId : socket.id,
     loginTime : time,
-    x: 100+Math.round(Math.random()*1000),
-    y: 100+Math.round(Math.random()*1000),
+    x: 200+Math.random()*600,
+    y: 100+Math.random()*200,
+    angle: Math.random()*180,
+    color: "0x"+Math.floor(Math.random()*16777215).toString(16)
   }  
   return user
 }
