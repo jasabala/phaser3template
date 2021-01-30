@@ -1,7 +1,7 @@
 import path from 'path';
 import http from 'http'
 import express from 'express';
-import {socketCommunication} from './serverutils'
+import {socketCommunication} from './GameCommunication'
 //import mysql from 'mysql'
 
 const app = express();
@@ -16,8 +16,8 @@ const io = require('socket.io')(server);
 //     database: ''
 //   });
 
+//set up the routes that point web requests to the right files.
 app.use(express.static('/../build-client')); 
-
 app.get("/", (req, res) =>{
     res.sendFile(path.join(__dirname,"/../build-client/index.html"))
 })
@@ -31,8 +31,11 @@ app.get("/assets/*", (req, res) =>{
     res.sendFile(path.join(__dirname,"/../build-client/"+req.path))
 })
 
+//start the game communication server to handle player data
 socketCommunication(io);
-  
+
+
+//start the web server to distribute the games files.
   server.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
  });

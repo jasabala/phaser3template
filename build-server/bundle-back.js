@@ -10,23 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/backend/GameCommunication.ts":
+/*!******************************************!*\
+  !*** ./src/backend/GameCommunication.ts ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.socketCommunication = void 0;\nfunction socketCommunication(io) {\n    let currentUsers = []; //array to store socketids and player data of each connection\n    io.on('connection', function (socket) {\n        let newPlayer = createNewUser(socket);\n        currentUsers.push(newPlayer); //add user for data tracking/sharing\n        //remove the users data when they disconnect.\n        socket.on('disconnect', function () {\n            let u = currentUsers.filter((user) => { return user.socketID == socket.id; });\n            console.log(currentUsers.length);\n            if (u && u[0]) {\n                console.log(\"removing user :\", u);\n                currentUsers.splice(currentUsers.indexOf(u[0]), 1);\n            }\n            socket.removeAllListeners();\n        });\n        //welcome the new user and send user info\n        socket.emit(\"first hi\", newPlayer);\n    });\n}\nexports.socketCommunication = socketCommunication;\nfunction createNewUser(socket) {\n    let d = new Date();\n    let time = d.toLocaleString('en-US', {\n        hour12: true,\n        timeZone: 'America/Los_Angeles'\n    });\n    let user = {\n        socketID: socket.id,\n        loginTime: time,\n        x: 100 + Math.round(Math.random() * 1000),\n        y: 100 + Math.round(Math.random() * 1000),\n    };\n    return user;\n}\n\n\n//# sourceURL=webpack://phaser3template/./src/backend/GameCommunication.ts?");
+
+/***/ }),
+
 /***/ "./src/backend/server.ts":
 /*!*******************************!*\
   !*** ./src/backend/server.ts ***!
   \*******************************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nconst path_1 = __importDefault(__webpack_require__(/*! path */ \"path\"));\nconst http_1 = __importDefault(__webpack_require__(/*! http */ \"http\"));\nconst express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\nconst serverutils_1 = __webpack_require__(/*! ./serverutils */ \"./src/backend/serverutils.ts\");\n//import mysql from 'mysql'\nconst app = express_1.default();\nconst port = process.env.PORT || 3000;\nconst server = http_1.default.createServer(app);\nconst io = __webpack_require__(/*! socket.io */ \"socket.io\")(server);\n// let db =  mysql.createPool({\n//     host: '',\n//     user: ',\n//     password: '',\n//     database: ''\n//   });\napp.use(express_1.default.static('/../build-client'));\napp.get(\"/\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/index.html\"));\n});\napp.get(\"/mystyle.css\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/mystyle.css\"));\n});\napp.get(\"/bundle-front.js\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/bundle-front.js\"));\n});\napp.get(\"/assets/*\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/\" + req.path));\n});\nserverutils_1.socketCommunication(io);\nserver.listen(port, () => {\n    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);\n});\n\n\n//# sourceURL=webpack://phaser3template/./src/backend/server.ts?");
-
-/***/ }),
-
-/***/ "./src/backend/serverutils.ts":
-/*!************************************!*\
-  !*** ./src/backend/serverutils.ts ***!
-  \************************************/
-/***/ ((__unused_webpack_module, exports) => {
-
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.socketCommunication = void 0;\nfunction socketCommunication(io) {\n    let d = new Date();\n    let time = d.toLocaleString('en-US', {\n        hour12: true,\n        timeZone: 'America/Los_Angeles'\n    });\n    let currentUsers = []; //aarray to store socketids and player data of each connection\n    io.on('connection', function (socket) {\n        currentUsers.push(createNewUser(socket));\n        socket.on('disconnect', function () {\n            let u = currentUsers.filter((user) => { user.socketID === socket.id; });\n            console.log('disconnect');\n            socket.removeAllListeners();\n        });\n        socket.emit(\"first hi\", \"You have connected to the socket port\");\n    });\n}\nexports.socketCommunication = socketCommunication;\nfunction createNewUser(socket) {\n    let user = {\n        socketID: socket.id\n    };\n    return user;\n}\n\n\n//# sourceURL=webpack://phaser3template/./src/backend/serverutils.ts?");
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nconst path_1 = __importDefault(__webpack_require__(/*! path */ \"path\"));\nconst http_1 = __importDefault(__webpack_require__(/*! http */ \"http\"));\nconst express_1 = __importDefault(__webpack_require__(/*! express */ \"express\"));\nconst GameCommunication_1 = __webpack_require__(/*! ./GameCommunication */ \"./src/backend/GameCommunication.ts\");\n//import mysql from 'mysql'\nconst app = express_1.default();\nconst port = process.env.PORT || 3000;\nconst server = http_1.default.createServer(app);\nconst io = __webpack_require__(/*! socket.io */ \"socket.io\")(server);\n// let db =  mysql.createPool({\n//     host: '',\n//     user: ',\n//     password: '',\n//     database: ''\n//   });\n//set up the routes that point web requests to the right files.\napp.use(express_1.default.static('/../build-client'));\napp.get(\"/\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/index.html\"));\n});\napp.get(\"/mystyle.css\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/mystyle.css\"));\n});\napp.get(\"/bundle-front.js\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/bundle-front.js\"));\n});\napp.get(\"/assets/*\", (req, res) => {\n    res.sendFile(path_1.default.join(__dirname, \"/../build-client/\" + req.path));\n});\n//start the game communication server to handle player data\nGameCommunication_1.socketCommunication(io);\n//start the web server to distribute the games files.\nserver.listen(port, () => {\n    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);\n});\n\n\n//# sourceURL=webpack://phaser3template/./src/backend/server.ts?");
 
 /***/ }),
 
