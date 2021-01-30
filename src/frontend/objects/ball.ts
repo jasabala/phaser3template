@@ -3,7 +3,6 @@ export default class Ball extends Phaser.Physics.Matter.Sprite {
   constructor(scene: Phaser.Scene, i: number) {
     super(scene.matter.world, 500, -50 * i,"circle")
     scene.add.existing(this)
-    console.log("ball")
       this.angle = Math.random() * 360
       this.setBounce(.7)
       this.setScale(.1 + Math.random() * .4)

@@ -13,9 +13,4 @@ export default class Square extends Phaser.Physics.Matter.Sprite {
         this.setFriction(.9)
       }
 
-      //server will set the position after first connect
-      setPos(x: number,y: number){
-        this.x = x
-        this.y = y
-      }
   }

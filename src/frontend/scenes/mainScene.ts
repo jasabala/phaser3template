@@ -7,10 +7,13 @@ interface UserData {
   socketId: string,
   loginTime: string,
   x: number,
-  y:number
+  y:number,
+  vx: number,
+  vy:number
   angle: number,
   color: string
 }
+
 
 export default class MainScene extends Phaser.Scene {
  
@@ -35,23 +38,21 @@ export default class MainScene extends Phaser.Scene {
     
       this.socket = io()
       this.socket.on("first hi", (data: UserData, opponentData: UserData[])=>{
-        this.player = new Square(this, data)        
-        console.log("adding player", this.player.x, this.player.y)
+        this.player = new Square(this, data)     
         opponentData.forEach((o)=>{
-          this.opponents.push(new Square(this, o))
-          console.log("adding opponent", o)
+          let opponent = new Square(this, o)     
+          this.opponents.push(opponent)
         })
-        this.time.addEvent({ delay: 1000/30,  loop: true, callback: this.updateState, callbackScope: this });
+        this.time.addEvent({ delay: 1000/60,  loop: true, callback: this.updateState(), callbackScope: this });
       })
 
       this.socket.on("add opponent", (data: UserData)=>{
-        console.log("adding opponent")
-          this.opponents.push(new Square(this, data))
+        let opponent = new Square(this, data)     
+        this.opponents.push(opponent)
          
       })
       this.socket.on("remove player", (pSocket)=>{
         let o:Square[] = this.opponents.filter((player:Square) => { return player.socketId == pSocket})
-        console.log(this.opponents.length)
         if(o && o[0]){
           let p = o[0]
           this.opponents.splice(this.opponents.indexOf(p, 1))
@@ -66,6 +67,8 @@ export default class MainScene extends Phaser.Scene {
             let opponent = o[0]
             opponent.x = p.x
             opponent.y = p.y
+            opponent.setVelocityX(p.vx)
+            opponent.setVelocityY(p.vY)
             opponent.angle = p.angle
           }
 
@@ -75,16 +78,28 @@ export default class MainScene extends Phaser.Scene {
   }
 
   updateState(){
-    //console.log("sent")
-    if(this.player){
-      let data = {
-        x: this.player.x,
-        y: this.player.y,
-        angle: this.player.angle
+    let oldX = 0
+    let oldY = 0
+    let oldAngle = 0
+
+    return ()=>{
+      if(this.player && (Math.abs(this.player.x - oldX) > 1 || Math.abs(this.player.y - oldY) > 1 || Math.abs(this.player.angle - oldAngle) > 1  )){
+        let data = {
+          x: this.player.x,
+          y: this.player.y,
+          vx: this.player.body.velocity.x,
+          vy: this.player.body.velocity.x,
+          angle: this.player.angle
+        }
+        this.socket.emit("player update", data)
+        oldX = this.player.x
+        oldY = this.player.y
+        oldAngle = this.player.angle
       }
-      this.socket.emit("player update", data)
-    //  console.log("sent", data)
+      
+
     }
+    
   }
 
 }
