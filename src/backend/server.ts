@@ -1,7 +1,7 @@
 import path from 'path';
 import http from 'http'
 import express from 'express';
-import {socketCommunication} from './GameCommunication'
+import {clientConnection} from './clientConnection'
 //import mysql from 'mysql'
 
 const app = express();
@@ -32,7 +32,7 @@ app.get("/assets/*", (req, res) =>{
 })
 
 //start the game communication server to handle player data
-socketCommunication(io);
+clientConnection(io);
 
 
 //start the web server to distribute the games files.
