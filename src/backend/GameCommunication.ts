@@ -80,9 +80,9 @@ export function socketCommunication(io: any) {
     recentUpdates.length = 0
 
     //disconnected players after a couple of minutes
-    let timenow:number = new Date().getDate()
+    let timenow:number = new Date().getTime()
     currentUsers.forEach((user: UserData)=>{
-      let timepassed = new Date().getDate() - user.loginTime
+      let timepassed = new Date().getTime() - user.loginTime
       if(timepassed >60000) {
         if (io.sockets.connected[user.socketId]) {
           io.sockets.connected[user.socketId].disconnect();
@@ -94,12 +94,11 @@ export function socketCommunication(io: any) {
 
 
   setInterval(()=>{
-    console.log(currentUsers.length+" logged in.")
+    var time = new Date();
+    console.log(currentUsers.length+" logged in @ "+ time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }))
      }, 5000)
- 
-
-
-}
+    
+  }
 
 function createNewUser(socket){
   let d = new Date();
@@ -110,7 +109,7 @@ function createNewUser(socket){
 
   let user: UserData = {
     socketId : socket.id,
-    loginTime : new Date().getDate(),
+    loginTime : new Date().getTime(),
     x: 200+Math.random()*600,
     y: 100+Math.random()*200,
     angle: Math.random()*180,
