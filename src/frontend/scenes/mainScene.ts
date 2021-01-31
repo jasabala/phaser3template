@@ -17,7 +17,8 @@ interface UserData {
 
 export default class MainScene extends Phaser.Scene {
  
-    playersConnectedText: Phaser.GameObjects.Text
+  firstHi = false  
+  playersConnectedText: Phaser.GameObjects.Text
     player: Square
     socket: SocketIOClient.Socket
     opponents: Square[] = []
@@ -40,12 +41,15 @@ export default class MainScene extends Phaser.Scene {
     
       this.socket = io()
       this.socket.on("first hi", (data: UserData, opponentData: UserData[])=>{
+        if(this.firstHi != true){
+          this.firstHi = true
         this.player = new Square(this, data)     
         opponentData.forEach((o)=>{
           let opponent = new Square(this, o)     
           this.opponents.push(opponent)
         })
         this.time.addEvent({ delay: 1000/60,  loop: true, callback: this.updateState(), callbackScope: this });
+        }        
       })
 
       this.socket.on("add opponent", (data: UserData)=>{
