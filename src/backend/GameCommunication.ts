@@ -64,8 +64,7 @@ export function socketCommunication(io: any) {
     io.emit("update all", recentUpdates)
     recentUpdates.forEach(data =>{
       let p = currentUsers.filter((user: UserData) => {
-        console.log(user.socketId, data.socketId, user.socketId == data.socketId)
-        return user.socketId == data.socketId
+         return user.socketId == data.socketId
       })
       if(p && p[0]){
         console.log("updating user")
