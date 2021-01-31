@@ -1,5 +1,6 @@
 export default class Square extends Phaser.Physics.Matter.Sprite {
   socketId: string
+  loginTime: number
   
   constructor(scene: Phaser.Scene, data) {
       
@@ -11,6 +12,7 @@ export default class Square extends Phaser.Physics.Matter.Sprite {
         this.setScale(.5)
         this.setTint(data.color)
         this.setFriction(.9)
+        this.loginTime = data.loginTime
       }
 
   }

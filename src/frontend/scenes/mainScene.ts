@@ -90,8 +90,9 @@ export default class MainScene extends Phaser.Scene {
       this.playersConnectedText.setText("clients connected: "+(this.opponents.length+1).toString())
 
 
-      if(this.player && (Math.abs(this.player.x - oldX) > 1 || Math.abs(this.player.y - oldY) > 1 || Math.abs(this.player.angle - oldAngle) > 1  )){
+      if(this.player && (Math.abs(this.player.x - oldX) > 3 || Math.abs(this.player.y - oldY) > 3)){
         let data = {
+          socketId: this.socket.id,
           x: this.player.x,
           y: this.player.y,
           vx: this.player.body.velocity.x,
@@ -102,7 +103,7 @@ export default class MainScene extends Phaser.Scene {
         oldX = this.player.x
         oldY = this.player.y
         oldAngle = this.player.angle
-      }      
+      }         
     }    
   }
 

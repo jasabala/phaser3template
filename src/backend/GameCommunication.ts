@@ -1,8 +1,9 @@
+import { use } from 'matter';
 import Phaser from 'phaser'
 import Square from '../frontend/objects/square';
 interface UserData {
   socketId: string,
-  loginTime: string,
+  loginTime: number,
   x: number,
   y:number,
   vx: number,
@@ -10,10 +11,21 @@ interface UserData {
   angle: number,
   color: string
 }
+
+interface RecentData {
+  socketId: string,
+  x: number,
+  y:number,
+  vx: number,
+  vy:number,
+  angle: number
+ 
+}
 export function socketCommunication(io: any) {
 
   
   let currentUsers: UserData[] = [] //array to store socketids and player data of each connection
+  let recentUpdates: RecentData[] = [] //array to store socketids and player data of each connection
   
   io.on('connection', function (socket) {
     //remove the users data when they disconnect.
@@ -26,17 +38,19 @@ export function socketCommunication(io: any) {
       socket.removeAllListeners();
     });
 
-    socket.on('player update', function (data) {
-      let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketId == socket.id})
-      if(u && u[0]){
-        let player = u[0]
+    socket.on('player update', function (data:UserData) {
+      let p = recentUpdates.filter(update => update.socketId == data.socketId)
+      if(p && p[0]){
+         let player = p[0]
         player.x = data.x
         player.y = data.y
         player.angle = data.angle
         player.vx = data.vx,
         player.vy = data.vy
+      }else{
+         recentUpdates.push(data)
       }
-    });
+    })
 
     //welcome the new user and send user info
     let newPlayer = createNewUser(socket)
@@ -47,11 +61,41 @@ export function socketCommunication(io: any) {
   })
 
   setInterval(()=>{
-    io.emit("update all", currentUsers)
+    io.emit("update all", recentUpdates)
+    recentUpdates.forEach(data =>{
+      let p = currentUsers.filter((user: UserData) => {
+        console.log(user.socketId, data.socketId, user.socketId == data.socketId)
+        return user.socketId == data.socketId
+      })
+      if(p && p[0]){
+        console.log("updating user")
+        let player = p[0]
+        player.x = data.x
+        player.y = data.y
+        player.angle = data.angle
+        player.vx = data.vx,
+        player.vy = data.vy
+      }
+
+
+
+    })
+    recentUpdates.length = 0
+
+    let timenow:number = new Date().getDate()
+      
+    //disconnected players after a couple of minutes
+    currentUsers.forEach((user: UserData)=>{
+      let timepassed = new Date().getDate() - user.loginTime
+      if(timepassed >60000) {
+        if (io.sockets.connected[user.socketId]) {
+          io.sockets.connected[user.socketId].disconnect();
+        }
+      }
+    })
+
   }, 100/30)
 
-  function sendPlayerData(){
-  }
 
 }
 
@@ -64,7 +108,7 @@ function createNewUser(socket){
 
   let user: UserData = {
     socketId : socket.id,
-    loginTime : time,
+    loginTime : new Date().getDate(),
     x: 200+Math.random()*600,
     y: 100+Math.random()*200,
     angle: Math.random()*180,
