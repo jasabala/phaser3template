@@ -29,6 +29,7 @@ export function socketCommunication(io: any) {
   
   io.on('connection', function (socket) {
     
+    
     //remove the users data when they disconnect.
     socket.on('disconnect', function () {
       removeUser(currentUsers, socket);
@@ -48,11 +49,14 @@ export function socketCommunication(io: any) {
       }
     })
 
+    socket.on("ready", ()=>{
+      let newPlayer = createNewUser(socket)
+      socket.emit("first hi",newPlayer, currentUsers);
+      socket.broadcast.emit("add opponent", newPlayer);
+      currentUsers.push(newPlayer)  //add user for data tracking/sharing
+    })
     //welcome the new user and send user info
-    let newPlayer = createNewUser(socket)
-    socket.emit("first hi",newPlayer, currentUsers);
-    socket.broadcast.emit("add opponent", newPlayer);
-    currentUsers.push(newPlayer)  //add user for data tracking/sharing
+    
 
   })
 

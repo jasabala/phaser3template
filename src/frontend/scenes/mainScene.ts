@@ -78,9 +78,11 @@ export default class MainScene extends Phaser.Scene {
             opponent.angle = p.angle
           }
 
-        })
+        })       
+      })  
+      
+      this.socket.emit("ready")
          
-      })     
   }
 
   updateState(){
