@@ -1,7 +1,7 @@
 
 import io from 'socket.io-client'
 import Square from '../objects/square'
-import Ball from '../objects/ball'
+//import Ball from '../objects/ball'
 
 interface UserData {
   socketId: string,
@@ -23,6 +23,8 @@ export default class MainScene extends Phaser.Scene {
     socket: SocketIOClient.Socket
     opponents: Square[] = []
 
+  playerLabel: Phaser.GameObjects.Text
+
 
     constructor() {
     super('MainScene')
@@ -35,7 +37,7 @@ export default class MainScene extends Phaser.Scene {
    }
 
   create() {
-
+    this.playerLabel =  this.add.text(-50,-50," this is you").setOrigin(.5,1)
     this.playersConnectedText = this.add.text(20,20,"")
     this.matter.world.setBounds(0,0,1024,750, 50,true, true, false, true)
     
@@ -81,8 +83,15 @@ export default class MainScene extends Phaser.Scene {
         })       
       })  
       
-      this.socket.emit("ready")
-         
+      this.socket.emit("ready")         
+  }
+
+  update(){
+    if(this.player){
+      this.playerLabel.x = this.player.x
+      this.playerLabel.y = this.player.y-40
+    }
+    
   }
 
   updateState(){
