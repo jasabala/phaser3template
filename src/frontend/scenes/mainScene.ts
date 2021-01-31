@@ -17,6 +17,7 @@ interface UserData {
 
 export default class MainScene extends Phaser.Scene {
  
+    playersConnectedText: Phaser.GameObjects.Text
     player: Square
     socket: SocketIOClient.Socket
     opponents: Square[] = []
@@ -34,6 +35,7 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
 
+    this.playersConnectedText = this.add.text(20,20,"")
     this.matter.world.setBounds(0,0,1024,750, 50,true, true, false, true)
     
       this.socket = io()
@@ -84,6 +86,10 @@ export default class MainScene extends Phaser.Scene {
 
     //send a position update only if position is changed
     return ()=>{
+
+      this.playersConnectedText.setText("clients connected: "+(this.opponents.length+1).toString())
+
+
       if(this.player && (Math.abs(this.player.x - oldX) > 1 || Math.abs(this.player.y - oldY) > 1 || Math.abs(this.player.angle - oldAngle) > 1  )){
         let data = {
           x: this.player.x,
