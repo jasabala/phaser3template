@@ -28,6 +28,7 @@ export function socketCommunication(io: any) {
   let recentUpdates: RecentData[] = [] //array to store socketids and player data of each connection
   
   io.on('connection', function (socket) {
+    
     //remove the users data when they disconnect.
     socket.on('disconnect', function () {
       let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketId == socket.id})
@@ -75,15 +76,17 @@ export function socketCommunication(io: any) {
         player.vx = data.vx,
         player.vy = data.vy
       }
-
-
-
     })
+
+    setInterval(()=>{
+     console.log(currentUsers.length+" logged in.")
+      })
+  
+      
     recentUpdates.length = 0
 
-    let timenow:number = new Date().getDate()
-      
     //disconnected players after a couple of minutes
+    let timenow:number = new Date().getDate()
     currentUsers.forEach((user: UserData)=>{
       let timepassed = new Date().getDate() - user.loginTime
       if(timepassed >60000) {
