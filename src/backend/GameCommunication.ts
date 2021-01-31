@@ -68,7 +68,6 @@ export function socketCommunication(io: any) {
          return user.socketId == data.socketId
       })
       if(p && p[0]){
-        console.log("updating user")
         let player = p[0]
         player.x = data.x
         player.y = data.y
