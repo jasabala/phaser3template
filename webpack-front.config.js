@@ -2,10 +2,10 @@ const path = require('path')
 module.exports = {
   target: "web",
   entry: {
-    app: ["./src/frontend/front.ts"]
+    app: ["./src/frontend/main.ts"]
   },
   output: {
-    path: path.resolve(__dirname, "build-client"),
+    path: path.resolve(__dirname, "public"),
     filename: "bundle-front.js",
   },
   devServer: {

@@ -2,7 +2,7 @@
 heroku deployabe webpacked phaser3 template with socket.io and type checking
 
 This template allows you to easily deploy a phaser3 game with websocket support.
-I intend to use this project for multiplayer games and for games that track data (heroku database) for individual players over time. To get started, adjust /src/frontend/front.ts to configure your game and import scenes. Then, add your scenes to the ./scenes folder.
+I intend to use this project for multiplayer games and for games that track data (heroku database) for individual players over time. To get started, adjust /src/frontend/main.ts to configure your game and import scenes. Then, add your scenes to the ./scenes folder. For multiplayer, socket coommunicatioon shouold be added to the /src/backend/GameCommunication.ts
 
 
 

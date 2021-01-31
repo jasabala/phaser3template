@@ -1,0 +1,18 @@
+html,
+body {
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(31, 28, 28);
+        overflow: hidden;
+    }
+.centered {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0;
+        height: 100%;
+        background-color: rgb(31, 28, 28);
+    }
+    

@@ -17,18 +17,18 @@ const io = require('socket.io')(server);
 //   });
 
 //set up the routes that point web requests to the right files.
-app.use(express.static('/../build-client')); 
+app.use(express.static('/../public')); 
 app.get("/", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build-client/index.html"))
+    res.sendFile(path.join(__dirname,"/../public/index.html"))
 })
 app.get("/mystyle.css", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build-client/mystyle.css"))
+    res.sendFile(path.join(__dirname,"/../public/mystyle.css"))
 })
-app.get("/bundle-front.js", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build-client/bundle-front.js"))
+app.get("/front-bundle.js", (req, res) =>{
+    res.sendFile(path.join(__dirname,"/../public/front-bundle.js"))
 })
 app.get("/assets/*", (req, res) =>{
-    res.sendFile(path.join(__dirname,"/../build-client/"+req.path))
+    res.sendFile(path.join(__dirname,"/../public/"+req.path))
 })
 
 //start the game communication server to handle player data

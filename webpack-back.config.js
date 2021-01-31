@@ -6,7 +6,7 @@ module.exports = {
     app: ["./src/backend/server.ts"]
   },
   output: {
-    path: path.resolve(__dirname, "build-server"),
+    path: path.resolve(__dirname, "built-server"),
     filename: "bundle-back.js"
   },
   module: {
