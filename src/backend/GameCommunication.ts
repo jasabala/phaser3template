@@ -31,12 +31,7 @@ export function socketCommunication(io: any) {
     
     //remove the users data when they disconnect.
     socket.on('disconnect', function () {
-      let u:UserData[] = currentUsers.filter((user:UserData) => { return user.socketId == socket.id})
-      if(u && u[0]){      
-        socket.broadcast.emit("remove player", u[0].socketId)
-        currentUsers.splice(currentUsers.indexOf(u[0]), 1);
-      }
-      socket.removeAllListeners();
+      removeUser(currentUsers, socket);
     });
 
     socket.on('player update', function (data:UserData) {
@@ -79,26 +74,23 @@ export function socketCommunication(io: any) {
       
     recentUpdates.length = 0
 
-    //disconnected players after a couple of minutes
-    let timenow:number = new Date().getTime()
-    currentUsers.forEach((user: UserData)=>{
-      let timepassed = new Date().getTime() - user.loginTime
-      if(timepassed >60000) {
-        if (io.sockets.connected[user.socketId]) {
-          io.sockets.connected[user.socketId].disconnect();
-        }
-      }
-    })
-
   }, 100/30)
 
 
   setInterval(()=>{
     var time = new Date();
     console.log(currentUsers.length+" logged in @ "+ time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }))
-     }, 5000)
-    
+     }, 5000) 
   }
+
+function removeUser(currentUsers: UserData[], socket: SocketIO.Socket) {
+  let u: UserData[] = currentUsers.filter((user: UserData) => { return user.socketId == socket.id; });
+  if (u && u[0]) {
+    socket.broadcast.emit("remove player", u[0].socketId);
+    currentUsers.splice(currentUsers.indexOf(u[0]), 1);
+  }
+  socket.removeAllListeners();
+}
 
 function createNewUser(socket){
   let d = new Date();
