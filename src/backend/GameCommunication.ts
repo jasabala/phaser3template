@@ -77,11 +77,6 @@ export function socketCommunication(io: any) {
         player.vy = data.vy
       }
     })
-
-    setInterval(()=>{
-     console.log(currentUsers.length+" logged in.")
-      })
-  
       
     recentUpdates.length = 0
 
@@ -97,6 +92,12 @@ export function socketCommunication(io: any) {
     })
 
   }, 100/30)
+
+
+  setInterval(()=>{
+    console.log(currentUsers.length+" logged in.")
+     }, 5000)
+ 
 
 
 }
