@@ -37,9 +37,12 @@ export default class MainScene extends Phaser.Scene {
    }
 
   create() {
+
+    this.add.text(500,300,"press anywhere to hop", {fontSize:"30px"}).setOrigin(.5,.5)
+
     this.playerLabel =  this.add.text(-50,-50," this is you").setOrigin(.5,1)
     this.playersConnectedText = this.add.text(20,20,"")
-    this.matter.world.setBounds(0,0,1024,750, 50,true, true, false, true)
+    this.matter.world.setBounds(0,0,1024,750, 50,true, true, true, true)
     
       this.socket = io()
       this.socket.on("first hi", (data: UserData, opponentData: UserData[])=>{
@@ -83,7 +86,11 @@ export default class MainScene extends Phaser.Scene {
         })       
       })  
       
-      this.socket.emit("ready")         
+      this.socket.emit("ready")    
+      this.input.on("pointerdown", ()=>{
+        if(this.player.y>700)
+        this.player.applyForce(new Phaser.Math.Vector2(.025-.05*Math.random(), -.05-.125*Math.random()))
+      })     
   }
 
   update(){
