@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\public",
-    "\\public\\assets"
+    "\\public\\assets",
+    "\\src",
+    "\\src\\backend",
+    "\\src\\frontend",
+    "\\src\\frontend\\objects",
+    "\\src\\frontend\\scenes"
   ],
-  "SelectedNode": "\\public\\assets\\square.png",
+  "SelectedNode": "\\public\\assets\\Safeimagekit-resized-imgpng.png",
   "PreviewInSolutionExplorer": false
 }
