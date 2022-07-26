@@ -38,7 +38,7 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
 
-    this.add.text(500,300,"press to hop", {fontSize:"50px"}).setOrigin(.5,.5)
+    this.add.text(500,300,"press to hop", {fontSize:"50px"}).setOrigin(.6,.5)
 
     this.playerLabel =  this.add.text(-50,-50," this is you").setOrigin(.5,1)
     this.playersConnectedText = this.add.text(20,20,"")
@@ -88,8 +88,8 @@ export default class MainScene extends Phaser.Scene {
       
       this.socket.emit("ready")    
       this.input.on("pointerdown", ()=>{
-        if(this.player.y>700)
-        this.player.applyForce(new Phaser.Math.Vector2(.025-.05*Math.random(), -.05-.125*Math.random()))
+        if(this.player.y>1100)
+        this.player.applyForce(new Phaser.Math.Vector2(.25-.5*Math.random(), -.5-.25*Math.random()))
       })     
   }
 
