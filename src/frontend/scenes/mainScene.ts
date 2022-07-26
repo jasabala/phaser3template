@@ -88,7 +88,7 @@ export default class MainScene extends Phaser.Scene {
       
       this.socket.emit("ready")    
       this.input.on("pointerdown", ()=>{
-        if(this.player.y>1100)
+        if(this.player.y>900)
         this.player.applyForce(new Phaser.Math.Vector2(.25-.5*Math.random(), -.5-.25*Math.random()))
       })     
   }
