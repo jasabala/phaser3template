@@ -8,10 +8,10 @@ export default class Square extends Phaser.Physics.Matter.Sprite {
       scene.add.existing(this)
         this.socketId = data.socketId
         this.angle = data.angle
-        this.setBounce(.7)
-        this.setScale(.5)
+        this.setBounce(.9)
+        this.setScale(.7)
         this.setTint(data.color)
-        this.setFriction(.9)
+        this.setFriction(.5)
         this.loginTime = data.loginTime
       }
 
